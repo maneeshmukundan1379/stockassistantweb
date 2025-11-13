@@ -265,23 +265,39 @@ Try these questions:
 
 ## 🔄 Updating Your App
 
-### To Update After Code Changes:
+### Quick Update Process:
 
-1. **Push changes to GitHub:**
+1. **Make your changes** to code files
+2. **Commit and push:**
    ```bash
+   cd /Users/maneeshmukundan/projects/agents/1_foundations/stockassistantweb
    git add .
-   git commit -m "Update stock assistant"
-   git push
+   git commit -m "Description of changes"
+   git push origin main
    ```
 
-2. **Render auto-deploys:**
-   - Render detects the push
-   - Automatically rebuilds and redeploys
-   - Takes 1-3 minutes
+3. **Render automatically redeploys:**
+   - Render detects the GitHub push (within seconds)
+   - Automatically pulls latest code
+   - Runs build command
+   - Restarts service
+   - Takes 1-3 minutes total
 
-3. **Or manually trigger:**
-   - Go to Render dashboard
-   - Click **"Manual Deploy"** → **"Deploy latest commit"**
+4. **Monitor deployment:**
+   - Go to Render dashboard → Your service
+   - Check **"Events"** tab for deployment status
+   - View **"Logs"** tab for build/startup logs
+   - Wait for **"Live"** status
+
+### Manual Redeploy (If Needed):
+
+- Go to Render dashboard → Your service
+- Click **"Manual Deploy"** tab
+- Click **"Deploy latest commit"**
+
+**Note:** Environment variable changes also trigger auto-redeploy (no Git push needed)
+
+**For detailed update instructions, see:** `HOW_TO_UPDATE.md`
 
 ---
 
