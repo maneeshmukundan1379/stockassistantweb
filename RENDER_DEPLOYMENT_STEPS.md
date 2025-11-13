@@ -134,9 +134,9 @@ Fill in these fields:
 - **Name:** `stock-assistant` (or any name you like)
 - **Region:** Choose closest to you (e.g., `Oregon (US West)`)
 - **Branch:** `main` (or your default branch)
-- **Root Directory:** Leave **empty** (or set to `/`)
+- **Root Directory:** Leave **empty** (DO NOT set to `/src` or any subdirectory)
 
-**Important:** Since `stockassistantweb` is its own repository, the root directory should be the repository root. All files are already at the root level!
+**Important:** Since `stockassistantweb` is its own repository, the root directory should be empty (repository root). Render will automatically use the root of your repository. If you see errors about `/opt/render/project/src/`, make sure Root Directory is empty!
 
 ### 5.2 Build & Start Commands
 
@@ -321,6 +321,17 @@ Try these questions:
 - Verify API keys are valid
 - Check logs for specific error messages
 - Test API keys locally first
+
+### Problem: "can't open file '/opt/render/project/src/stock_assistant_web.py': [Errno 2] No such file or directory"
+
+**Solution:**
+- **Root Directory is set incorrectly!** 
+- Go to your Render service → **Settings** tab
+- Find **"Root Directory"** field
+- **Clear it completely** (leave it empty)
+- Click **"Save Changes"**
+- Render will automatically redeploy
+- The file is at the repository root, not in a `src` subdirectory
 
 ### Problem: "Port Already in Use"
 
