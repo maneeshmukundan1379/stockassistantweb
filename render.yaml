@@ -3,7 +3,7 @@ services:
     name: stock-assistant
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: chainlit run stock_assistant_web.py --port $PORT
+    startCommand: chainlit run stock_assistant_web.py --host 0.0.0.0 --port $PORT
     envVars:
       - key: OPENAI_API_KEY
         sync: false
