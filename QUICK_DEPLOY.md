@@ -20,7 +20,7 @@ git push
 
 ### 4. Configure
 - **Build Command:** `pip install -r requirements.txt`
-- **Start Command:** `python Stock_assistant_web.py`
+- **Start Command:** `python stock_assistant_web.py`
 - **Plan:** Free
 
 ### 5. Add Environment Variables

@@ -20,24 +20,28 @@ Before you start, make sure you have:
 
 ### 1.1 Verify Files Are Ready
 
-Make sure you have these files in `1_foundations/stockassistantweb/`:
+Make sure you have these files in the `stockassistantweb` repository:
 
 ```
 stockassistantweb/
-├── Stock_assistant_web.py    ← Main application
+├── stock_assistant_web.py    ← Main application
 ├── requirements.txt          ← Dependencies
 ├── render.yaml              ← Render config (optional)
-└── README.md                ← Documentation
+├── README.md                ← Documentation
+├── RENDER_DEPLOYMENT_STEPS.md ← This guide
+└── test_question.py         ← Testing script
 ```
+
+**Repository:** `https://github.com/maneeshmukundan1379/stockassistantweb`
 
 ### 1.2 Test Locally (Optional but Recommended)
 
 ```bash
-cd 1_foundations/stockassistantweb
+cd /Users/maneeshmukundan/projects/agents/1_foundations/stockassistantweb
 pip install -r requirements.txt
 export OPENAI_API_KEY=your_key_here
 export ALPHA_VANTAGE_API_KEY=your_key_here
-python Stock_assistant_web.py
+python stock_assistant_web.py
 ```
 
 If it runs on `http://localhost:7860`, you're good to go!
@@ -46,22 +50,39 @@ If it runs on `http://localhost:7860`, you're good to go!
 
 ## Step 2: Push Code to GitHub
 
-### 2.1 Initialize Git (if not already done)
+### 2.1 Create Repository on GitHub
+
+1. **Go to GitHub:**
+   - Visit: https://github.com/new
+   - Repository name: `stockassistantweb`
+   - Choose Public or Private
+   - **⚠️ IMPORTANT:** Do NOT check any boxes (no README, .gitignore, or license)
+   - Click **"Create repository"**
+
+### 2.2 Initialize Git and Push
+
+The `stockassistantweb` folder is already set up as its own Git repository. Push it to GitHub:
 
 ```bash
-cd /Users/maneeshmukundan/projects/agents
-git add 1_foundations/stockassistantweb/
-git commit -m "Add Stock Assistant Web for Render deployment"
-git push origin main
+cd /Users/maneeshmukundan/projects/agents/1_foundations/stockassistantweb
+
+# If repository doesn't exist yet, create it on GitHub first, then:
+git remote add origin https://github.com/maneeshmukundan1379/stockassistantweb.git
+git branch -M main
+git push -u origin main
 ```
 
 **Note:** Make sure your `.env` file is in `.gitignore` - never commit API keys!
 
-### 2.2 Verify on GitHub
+### 2.3 Verify on GitHub
 
-- Go to https://github.com/your-username/your-repo
-- Confirm `1_foundations/stockassistantweb/` folder is visible
-- Check that `Stock_assistant_web.py` and `requirements.txt` are there
+- Go to https://github.com/maneeshmukundan1379/stockassistantweb
+- Confirm all files are visible:
+  - `stock_assistant_web.py`
+  - `requirements.txt`
+  - `render.yaml`
+  - `README.md`
+  - Other documentation files
 
 ---
 
@@ -99,7 +120,7 @@ git push origin main
 ### 4.2 Connect Repository
 
 1. You'll see a list of your GitHub repositories
-2. **Find and click** on your repository (the one with `stockassistantweb`)
+2. **Find and click** on: `maneeshmukundan1379/stockassistantweb`
 3. Click **"Connect"**
 
 ---
@@ -113,9 +134,9 @@ Fill in these fields:
 - **Name:** `stock-assistant` (or any name you like)
 - **Region:** Choose closest to you (e.g., `Oregon (US West)`)
 - **Branch:** `main` (or your default branch)
-- **Root Directory:** `1_foundations/stockassistantweb`
+- **Root Directory:** Leave **empty** (or set to `/`)
 
-**Important:** Set Root Directory to `1_foundations/stockassistantweb` so Render knows where your files are!
+**Important:** Since `stockassistantweb` is its own repository, the root directory should be the repository root. All files are already at the root level!
 
 ### 5.2 Build & Start Commands
 
@@ -128,7 +149,7 @@ Fill in these fields:
 
 - **Start Command:**
   ```
-  python Stock_assistant_web.py
+  python stock_assistant_web.py
   ```
 
 ### 5.3 Plan Selection
@@ -290,7 +311,7 @@ Try these questions:
 **Solution:**
 - Check **"Logs"** tab for error messages
 - Verify `requirements.txt` has all dependencies
-- Ensure `Stock_assistant_web.py` is in the root directory
+- Ensure `stock_assistant_web.py` is in the root directory
 - Check Python version (Render uses Python 3.9+)
 
 ### Problem: App Starts But Shows Error

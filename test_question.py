@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Quick test script for Stock_assistant_web.py
+Quick test script for stock_assistant_web.py
 """
 import sys
 import os
@@ -8,7 +8,7 @@ import os
 # Add current directory to path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from Stock_assistant_web import process_question
+from stock_assistant_web import process_question
 
 def test_question(question):
     """Test a question"""

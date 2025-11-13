@@ -36,7 +36,7 @@ This is the web-ready version of the Stock Assistant Chatbot, configured for dep
    - **Name:** `stock-assistant` (or your choice)
    - **Environment:** `Python 3`
    - **Build Command:** `pip install -r requirements.txt`
-   - **Start Command:** `python Stock_assistant_web.py`
+   - **Start Command:** `python stock_assistant_web.py`
    - **Plan:** Free
 
 5. **Add Environment Variables**
@@ -61,7 +61,7 @@ The `render.yaml` file is already configured in this directory.
 
 ## 📝 Files Included
 
-- `Stock_assistant_web.py` - Main application (web-ready)
+- `stock_assistant_web.py` - Main application (web-ready)
 - `requirements.txt` - Python dependencies
 - `render.yaml` - Render configuration
 - `README.md` - This file
@@ -75,7 +75,7 @@ cd stockassistantweb
 pip install -r requirements.txt
 export OPENAI_API_KEY=your_key
 export ALPHA_VANTAGE_API_KEY=your_key  # Optional
-python Stock_assistant_web.py
+python stock_assistant_web.py
 ```
 
 The app will run on `http://localhost:7860`
