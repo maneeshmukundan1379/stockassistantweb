@@ -15,7 +15,6 @@ Requirements:
 
 import os
 import yfinance as yf
-import gradio as gr
 from openai import OpenAI
 from dotenv import load_dotenv
 import requests
@@ -391,8 +390,7 @@ def process_question(question, history):
     
     entities = extract_entities(question)
     if not entities:
-        return history + [{"role": "user", "content": question}, 
-                        {"role": "assistant", "content": "❌ Could not understand question"}], ""
+        return "❌ Could not understand question. Please try rephrasing."
     
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
@@ -403,13 +401,11 @@ def process_question(question, history):
             ticker = lookup_ticker(entities['companies'][0])
         
         if not ticker:
-            return history + [{"role": "user", "content": question},
-                            {"role": "assistant", "content": f"❌ Could not find ticker for '{entities['main_entity']}'"}], ""
+            return f"❌ Could not find ticker for '{entities['main_entity']}'. Please try using the company's stock ticker symbol."
         
         stock_data = get_stock_data(ticker)
         if not stock_data:
-            return history + [{"role": "user", "content": question},
-                            {"role": "assistant", "content": f"❌ Could not retrieve data for {ticker}"}], ""
+            return f"❌ Could not retrieve data for {ticker}. Please try again later."
         
         company = stock_data.get('company_name', ticker)
         
@@ -444,7 +440,6 @@ _Retrieved at {ts}_"""
                 resp += f", {news['source']}"
             resp += f", OpenAI GPT-4o-mini\n_Generated at {ts}_"
         
-        return history + [{"role": "user", "content": question}, {"role": "assistant", "content": resp}], ""
     
     # Sector questions
     elif entities['question_type'] == 'sector':
@@ -455,8 +450,6 @@ _Retrieved at {ts}_"""
         
         if not tickers:
             available_sectors = ', '.join(sorted(set(SECTOR_SCREENERS.keys())))
-            return history + [{"role": "user", "content": question},
-                            {"role": "assistant", "content": f"❌ Sector '{sector}' not found. Available sectors: {available_sectors}"}], ""
         
         # Get data for stocks
         stocks = []
@@ -467,9 +460,7 @@ _Retrieved at {ts}_"""
                 time.sleep(0.5)
         
         if not stocks:
-            return history + [{"role": "user", "content": question},
-                            {"role": "assistant", "content": "❌ Could not retrieve sector data"}], ""
-        
+            return "❌ Could not retrieve sector data. Please try again later."
         # Use AI to answer the specific question
         if client is None:
             client = get_openai_client()
@@ -501,11 +492,8 @@ Answer the EXACT question. If asking for declining stocks, list those with negat
 📡 Sources: Alpha Vantage API, Yahoo Finance API, OpenAI GPT-4o-mini
 _Generated at {ts}_"""
             
-            return history + [{"role": "user", "content": question}, {"role": "assistant", "content": response}], ""
         except Exception as e:
-            return history + [{"role": "user", "content": question},
-                            {"role": "assistant", "content": f"❌ Error: {str(e)}"}], ""
-    
+            return f"❌ Error: {str(e)}"
     # General questions
     else:
         if client is None:
@@ -523,65 +511,5 @@ _Generated at {ts}_"""
 
 📚 Source: OpenAI GPT-4o-mini
 _Generated at {ts}_"""
-            return history + [{"role": "user", "content": question}, {"role": "assistant", "content": response}], ""
         except:
-            return history + [{"role": "user", "content": question},
-                            {"role": "assistant", "content": "❌ Error processing question"}], ""
-
-def create_interface():
-    """Create Gradio UI"""
-    with gr.Blocks(title="Stock Assistant", theme=gr.themes.Soft()) as demo:
-        gr.Markdown("""
-        # 📊 Stock Assistant
-        
-        **Ask any question about stocks - get smart answers!**
-        
-        ### Features:
-        - 🧠 Finds companies anywhere in your question
-        - 📈 30-day historical data
-        - 📰 News for predictive questions
-        - 🏢 Sector analysis
-        - 💡 Simple answers for simple questions
-        
-        **Try:** "What's Tesla's price?" or "Should I buy Microsoft?" or "Healthcare stocks declining this month?"
-        """)
-        
-        chatbot = gr.Chatbot(label="Chat", height=550, type='messages', show_copy_button=True)
-        
-        with gr.Row():
-            msg = gr.Textbox(placeholder="Ask about any stock...", label="Question", scale=4)
-            btn = gr.Button("Ask", variant="primary", scale=1)
-        
-        clear = gr.Button("Clear", variant="secondary")
-        
-        btn.click(process_question, [msg, chatbot], [chatbot, msg])
-        msg.submit(process_question, [msg, chatbot], [chatbot, msg])
-        clear.click(lambda: ([], ""), outputs=[chatbot, msg])
-        
-        gr.Examples([
-            "What's Apple's price?",
-            "Should I buy Tesla?",
-            "Healthcare stocks declining this month?",
-            "When was NVIDIA highest?"
-        ], inputs=msg)
-
-    return demo
-
-# Module-level demo for deployment
-demo = create_interface()
-
-def main():
-    """Launch app - Configured for Render hosting"""
-    print("🚀 Starting Stock Assistant...")
-    # Get port from environment variable (set by Render)
-    port = int(os.environ.get("PORT", 7860))
-    demo.launch(
-        server_name="0.0.0.0",  # Bind to all interfaces for hosting
-        server_port=port,
-        share=False,  # Don't use share=True on hosting platforms
-        show_error=True
-    )
-
-if __name__ == "__main__":
-    main()
-
+            return "❌ Error processing question. Please try again."

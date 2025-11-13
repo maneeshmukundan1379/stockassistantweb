@@ -248,7 +248,7 @@ git push origin main --force
 
 **Solution:**
 - Fix the error locally first
-- Test locally: `python stock_assistant_web.py`
+- Test locally: `chainlit run stock_assistant_web.py`
 - Commit fix and push again
 
 ### Problem: App Not Updating
@@ -269,9 +269,9 @@ git push origin main --force
 
 1. **Test Locally First**
    ```bash
-   python stock_assistant_web.py
+   chainlit run stock_assistant_web.py
    ```
-   Make sure it works before pushing!
+   Make sure it works before pushing! (Opens at http://localhost:8000)
 
 2. **Use Descriptive Commit Messages**
    - Clear, specific messages
@@ -300,8 +300,8 @@ git push origin main --force
 # (Edit stock_assistant_web.py, etc.)
 
 # 2. Test locally
-python stock_assistant_web.py
-# Test in browser at http://localhost:7860
+chainlit run stock_assistant_web.py
+# Test in browser at http://localhost:8000
 
 # 3. Commit changes
 cd /Users/maneeshmukundan/projects/agents/1_foundations/stockassistantweb
